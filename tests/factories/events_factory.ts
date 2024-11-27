@@ -8,3 +8,11 @@ export async function create_event(name:string, date: Date) {
         }
     })
 }
+
+export async function get_event_byId(id: number) {
+    return await prisma.event.findUnique({
+        where:{
+            id
+        }
+    })
+}

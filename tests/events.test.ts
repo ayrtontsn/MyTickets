@@ -1,6 +1,6 @@
 import app from "index";
 import supertest from "supertest"
-import { create_event } from "./factories/events_factory";
+import { create_event, get_event_byId } from "./factories/events_factory";
 import { faker } from '@faker-js/faker';
 import prisma from "database";
 
@@ -70,10 +70,15 @@ describe("put /events", () => {
     it("editar eventos por id", async () => {
         const { id } = await create_event(faker.company.name(), faker.date.future())
 
+        const name = faker.company.name()
+        const date = faker.date.future()
+
         const { status, body } = await api.put(`/events/${id}`).send({
-            name: faker.company.name(),
-            date: faker.date.future()
+            name,
+            date
         })
+        const event = await get_event_byId(id)
+
         expect(status).toBe(200)
         expect(body).toEqual(
             expect.objectContaining({
@@ -82,6 +87,8 @@ describe("put /events", () => {
                 date: expect.any(String)
             })
         )
+        expect(event.name).toEqual(name)
+        expect(event.date).toEqual(date)
     })
 
 })
