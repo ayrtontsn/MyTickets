@@ -9,3 +9,11 @@ export async function create_ticket(code:string, owner: string, eventId: number)
         }
     })
 }
+
+export async function get_ticket_byId(id: number) {
+    return await prisma.ticket.findUnique({
+        where:{
+            id
+        }
+    })
+}
