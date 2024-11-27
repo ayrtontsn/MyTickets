@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start": "npm run migration:run && npm run seed && node dist/src/index.js",
-    "dev": "ts-node-dev src/index.ts",
+    "start": "npm run migration:run && npm run seed && node dist/src/server.js",
+    "dev": "ts-node-dev src/server.ts",
     "migration:run": "prisma migrate deploy",
+    "seed": "prisma db seed",
     "test:load-envs": "dotenv -e .env.test",
     "test": "npm run test:load-envs jest --runInBand",
     "test:coverage": "npm run test:load-envs -- jest -- --coverage --runInBand",
@@ -22,7 +23,8 @@
     "express": "^4.19.2",
     "express-async-errors": "^3.1.1",
     "http-status": "^1.7.4",
-    "joi": "^17.13.3"
+    "joi": "^17.13.3",
+    "pg": "^8.13.1"
   },
   "devDependencies": {
     "@faker-js/faker": "^9.2.0",
