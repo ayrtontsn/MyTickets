@@ -17,3 +17,12 @@ export async function get_ticket_byId(id: number) {
         }
     })
 }
+
+export async function update_ticket_byId(id: number) {
+    return await prisma.ticket.update({
+        where: { id },
+        data: {
+          used: true
+        }
+    })
+}
