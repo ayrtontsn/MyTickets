@@ -102,3 +102,24 @@ describe("delete /events", () => {
     })
 
 })
+
+describe("fail post/events", () => {
+    it("Criar eventos e dar erro de conflito (mesmo nome)", async () => {
+        const name = faker.company.name()
+        const date = faker.date.future()
+
+        await create_event(name, date)
+        const { status } = await api.post("/events").send({
+            name,
+            date
+        })
+        expect(status).toBe(409)
+    })
+})
+
+describe("fail get/events", () => {
+    it("retornar evento sem id cadastrado - erro not_found", async () => {
+        const { status } = await api.get(`/events/2`)
+        expect(status).toBe(404)
+    })
+})
